@@ -18,6 +18,8 @@
   --radius-lg: 22px;
   --radius-md: 16px;
   --nav-height: 82px;
+  --runner-width: 96px;
+  --runner-height: 118px;
 }
 
 /* ===== Keyframe Animations ===== */
@@ -111,8 +113,8 @@ img {
 
 .hero-logo-wrap {
   text-align: center;
-  margin-bottom: 0.5rem;
-  height: 180px;
+  margin-bottom: 0.35rem;
+  height: var(--runner-height);
   position: relative;
   overflow: hidden;
 }
@@ -121,8 +123,8 @@ img {
   position: absolute;
   top: 0;
   left: -10%;
-  width: 145px;
-  height: 180px;
+  width: var(--runner-width);
+  height: var(--runner-height);
   animation: runAcross 5.6s linear infinite;
 }
 
@@ -144,7 +146,7 @@ img {
 
 @keyframes runAcross {
   0% { left: -10%; }
-  50% { left: calc(90% - 145px); }
+  50% { left: calc(90% - var(--runner-width)); }
   100% { left: -10%; }
 }
 
@@ -194,8 +196,8 @@ img {
 }
 
 .hero {
-  padding-top: 4.5rem;
-  padding-bottom: 2.5rem;
+  padding-top: 2rem;
+  padding-bottom: 1.7rem;
 }
 
 .hero-copy {
@@ -204,13 +206,13 @@ img {
 
 .method-name {
   display: inline-block;
-  margin: 0 0 0.9rem;
-  padding: 0.4rem 1.3rem;
+  margin: 0 0 0.65rem;
+  padding: 0.34rem 1.05rem;
   border-radius: 999px;
   background: linear-gradient(135deg, rgba(47, 111, 219, 0.1) 0%, rgba(91, 79, 207, 0.07) 100%);
   border: 1px solid rgba(47, 111, 219, 0.2);
   color: var(--accent);
-  font-size: 0.88rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -224,11 +226,11 @@ img {
 
 .paper-title {
   margin: 0 auto;
-  max-width: 960px;
-  font-size: clamp(3rem, 6.5vw, 5rem);
+  max-width: 1120px;
+  font-size: 4.15rem;
   font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.01em;
+  line-height: 1.03;
+  letter-spacing: 0;
   background: linear-gradient(135deg, #1a3668 0%, #2f6fdb 40%, #6b5ce7 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
@@ -267,10 +269,10 @@ img {
 
 .hero-summary {
   max-width: 820px;
-  margin: 1.2rem auto 0;
+  margin: 1rem auto 0;
   color: var(--text-muted);
-  font-size: 1.06rem;
-  line-height: 1.8;
+  font-size: 0.98rem;
+  line-height: 1.55;
 }
 
 .author-line {
@@ -278,14 +280,15 @@ img {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.75rem 1.25rem;
-  margin-top: 1.8rem;
-  font-size: 1rem;
+  margin-top: 1.15rem;
+  font-size: 0.95rem;
 }
 
 .affiliation-line {
-  margin: 0.8rem 0 0;
+  margin: 0.55rem 0 0;
   text-align: center;
   color: var(--text-muted);
+  font-size: 0.92rem;
 }
 
 .cta-row {
@@ -293,7 +296,7 @@ img {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.8rem;
-  margin-top: 1.8rem;
+  margin-top: 1.2rem;
 }
 
 .project-button {
@@ -620,6 +623,16 @@ img {
 }
 
 @media (max-width: 820px) {
+  :root {
+    --runner-width: 82px;
+    --runner-height: 100px;
+  }
+
+  .paper-title {
+    max-width: 720px;
+    font-size: 3.25rem;
+  }
+
   .nav-toggle {
     display: inline-block;
     flex-shrink: 0;
@@ -646,6 +659,11 @@ img {
 }
 
 @media (max-width: 560px) {
+  :root {
+    --runner-width: 68px;
+    --runner-height: 84px;
+  }
+
   .section {
     padding: 3.2rem 1rem;
   }
@@ -655,7 +673,23 @@ img {
   }
 
   .hero {
-    padding-top: 3.5rem;
+    padding-top: 2rem;
+  }
+
+  .method-name {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+  }
+
+  .paper-title {
+    max-width: 100%;
+    font-size: 2.35rem;
+    line-height: 1.06;
+  }
+
+  .hero-summary {
+    font-size: 0.92rem;
+    line-height: 1.45;
   }
 
   .cta-row {
@@ -859,41 +893,55 @@ img {
 .play-btn {
   position: relative;
   z-index: 2;
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: none;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(4px);
+  background: transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease, background 0.2s ease;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.55));
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .play-btn::before {
   content: "";
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: 5px;
+  border-top: 16px solid transparent;
+  border-bottom: 16px solid transparent;
+  border-left: 24px solid #ffffff;
+}
+
+.play-btn::after {
+  content: none;
+}
+
+.video-card.is-playing .play-btn::before,
+.streaming-card.is-playing .play-btn::before {
+  width: 8px;
+  height: 30px;
+  margin-left: 0;
+  border: 0;
   background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 14px 0 0 #ffffff;
 }
 
 .play-btn i {
-  position: relative;
-  z-index: 1;
-  color: var(--accent);
-  font-size: 1.1rem;
-  margin-left: 0.15rem;
+  display: none;
+}
+
+.play-btn svg,
+.play-btn .svg-inline--fa {
+  display: none;
 }
 
 .play-btn:hover {
   transform: scale(1.08);
-  background: rgba(255, 255, 255, 0.3);
 }
 
 .video-card__caption {

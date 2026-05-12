@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function buildStreamingCard(filename, domain) {
       var path = "static/videos/" + domain + "/stream/" + filename + ".mp4";
+      var previewPath = path + "#t=0.1";
       var steps = STREAMING_CAPTIONS[filename] || [filenameToCaption(filename)];
       var chipsHtml = steps
         .map(function(step, i) {
@@ -124,13 +125,14 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .join("");
 
-      return '\n    <article class="streaming-card reveal">\n      <div class="streaming-player">\n        <video class="gallery-video streaming-video"\n          data-src="' + path + '"\n          preload="none" loop muted playsinline>\n        </video>\n        <div class="video-overlay">\n          <button class="play-btn" aria-label="Play streaming demo">\n            <i class="fas fa-play"></i>\n          </button>\n          <div class="video-gradient"></div>\n        </div>\n      </div>\n      <div class="streaming-meta">\n        <div class="instruction-chips">' + chipsHtml + '</div>\n      </div>\n    </article>';
+      return '\n    <article class="streaming-card reveal">\n      <div class="streaming-player">\n        <video class="gallery-video streaming-video"\n          src="' + previewPath + '"\n          data-src="' + path + '"\n          preload="metadata" loop muted playsinline>\n        </video>\n        <div class="video-overlay">\n          <button class="play-btn" aria-label="Play streaming demo"></button>\n          <div class="video-gradient"></div>\n        </div>\n      </div>\n      <div class="streaming-meta">\n        <div class="instruction-chips">' + chipsHtml + '</div>\n      </div>\n    </article>';
     }
 
     function buildVideoCard(filename, domain) {
       var path = "static/videos/" + domain + "/" + filename + ".mp4";
+      var previewPath = path + "#t=0.1";
       var caption = filenameToCaption(filename);
-      return '\n    <article class="video-card reveal" data-caption="' + caption + '">\n      <div class="video-card__player">\n        <video class="gallery-video"\n          data-src="' + path + '"\n          preload="none" loop muted playsinline>\n        </video>\n        <div class="video-overlay">\n          <button class="play-btn" aria-label="Play: ' + caption + '">\n            <i class="fas fa-play"></i>\n          </button>\n          <div class="video-gradient"></div>\n        </div>\n      </div>\n      <div class="video-card__caption">\n        <span class="video-card__command">' + caption + '</span>\n      </div>\n    </article>';
+      return '\n    <article class="video-card reveal" data-caption="' + caption + '">\n      <div class="video-card__player">\n        <video class="gallery-video"\n          src="' + previewPath + '"\n          data-src="' + path + '"\n          preload="metadata" loop muted playsinline>\n        </video>\n        <div class="video-overlay">\n          <button class="play-btn" aria-label="Play: ' + caption + '"></button>\n          <div class="video-gradient"></div>\n        </div>\n      </div>\n      <div class="video-card__caption">\n        <span class="video-card__command">' + caption + '</span>\n      </div>\n    </article>';
     }
 
     function renderTabPanel(domain) {
@@ -167,6 +169,15 @@ document.addEventListener("DOMContentLoaded", () => {
     var switcher = document.querySelector(".tab-switcher");
     switcher.insertAdjacentElement("afterend", realPanel);
     switcher.insertAdjacentElement("afterend", simPanel);
+
+    document.querySelectorAll(".gallery-video").forEach(function(video) {
+      video.addEventListener("loadedmetadata", function() {
+        if (!video.duration || video.currentTime > 0.05) return;
+        try {
+          video.currentTime = Math.min(0.1, Math.max(video.duration - 0.05, 0));
+        } catch (err) {}
+      }, { once: true });
+    });
 
     // Tab switching
     tabBtns.forEach(function(btn) {
@@ -213,7 +224,9 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
 
-        video.src = video.dataset.src;
+        if (!video.getAttribute("src")) {
+          video.src = video.dataset.src;
+        }
         video.play().then(function() {
           card.classList.add("is-playing");
         }).catch(function() {});
