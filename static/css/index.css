@@ -325,9 +325,13 @@ img {
   padding-top: 1.2rem;
 }
 
+.container.teaser-container {
+  max-width: min(calc(100% - 3rem), 980px);
+}
+
 .image-panel {
   margin: 0;
-  padding: 1rem;
+  padding: 0.65rem;
   border-radius: var(--radius-lg);
   background: #ffffff;
   border: 1px solid var(--line);
@@ -361,7 +365,7 @@ img {
 }
 
 .container.framework-container {
-  max-width: min(calc(100% - 3rem), 1200px);
+  max-width: min(calc(100% - 3rem), 1080px);
 }
 
 .section-title {
@@ -442,13 +446,13 @@ img {
 .framework-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.75rem;
+  gap: 0.65rem;
   align-items: start;
   margin-top: 1.45rem;
 }
 
 .framework-image {
-  padding: 0.65rem;
+  padding: 0.55rem;
   border-radius: var(--radius-lg);
   background: #ffffff;
   border: 1px solid var(--line);
@@ -470,18 +474,20 @@ img {
 .framework-notes {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .framework-note {
-  padding: 0.9rem 1rem;
+  padding: 0.75rem 0.9rem;
 }
 
 .framework-note h3 {
   margin-bottom: 0.55rem;
+  font-size: 1rem;
 }
 
 .framework-note p {
+  font-size: 0.92rem;
   line-height: 1.55;
 }
 
