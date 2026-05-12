@@ -240,4 +240,30 @@ document.addEventListener("DOMContentLoaded", () => {
       videoObserver.observe(el);
     });
   }
+
+  // ── Logo sprite animation ──
+  var navFrames = document.querySelectorAll(".brand-logo .lf");
+  var heroFrames = document.querySelectorAll(".hero-logo-runner .lf2");
+  var logoFrame = 0;
+
+  function showLogoFrame(idx) {
+    if (navFrames.length) {
+      navFrames.forEach(function(f, i) {
+        f.style.display = i === idx ? "block" : "none";
+      });
+    }
+    if (heroFrames.length) {
+      heroFrames.forEach(function(f, i) {
+        f.style.display = i === idx ? "block" : "none";
+      });
+    }
+  }
+
+  if (navFrames.length || heroFrames.length) {
+    showLogoFrame(0);
+    setInterval(function() {
+      logoFrame = (logoFrame + 1) % 5;
+      showLogoFrame(logoFrame);
+    }, 120);
+  }
 });

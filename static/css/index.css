@@ -103,18 +103,34 @@ img {
 .brand-logo {
   display: block;
   flex-shrink: 0;
+  width: 29px;
+  height: 36px;
   -webkit-text-fill-color: initial;
 }
 
 .hero-logo-wrap {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  height: 180px;
+  position: relative;
+  overflow: hidden;
 }
 
-.hero-logo {
-  display: inline-block;
-  filter: drop-shadow(0 2px 8px rgba(47, 111, 219, 0.15));
-  animation: subtleFloat 4s ease-in-out infinite;
+.hero-logo-runner {
+  position: absolute;
+  top: 0;
+  width: 145px;
+  height: 180px;
+  filter: drop-shadow(0 3px 10px rgba(47, 111, 219, 0.15));
+  animation: runAcross 5s ease-in-out infinite;
+}
+
+@keyframes runAcross {
+  0%   { left: -10%; transform: scaleX(1); }
+  45%  { left: calc(90% - 145px); transform: scaleX(1); }
+  50%  { left: calc(90% - 145px); transform: scaleX(-1); }
+  95%  { left: -10%; transform: scaleX(-1); }
+  100% { left: -10%; transform: scaleX(1); }
 }
 
 .nav-links {
