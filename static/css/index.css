@@ -856,6 +856,8 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
@@ -870,22 +872,14 @@ img {
   pointer-events: none;
 }
 
-.video-card.is-playing .video-overlay {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.video-card.is-playing:hover .video-overlay {
+.video-card:not(.is-playing):hover .video-overlay,
+.video-card:not(.is-playing):focus-within .video-overlay {
   opacity: 1;
   pointer-events: auto;
 }
 
-.streaming-card.is-playing .video-overlay {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.streaming-card.is-playing:hover .video-overlay {
+.streaming-card:not(.is-playing):hover .video-overlay,
+.streaming-card:not(.is-playing):focus-within .video-overlay {
   opacity: 1;
   pointer-events: auto;
 }
