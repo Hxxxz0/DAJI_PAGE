@@ -1,490 +1,474 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
-  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="description" content="Before the Body Moves presents DAJI, an anticipatory joint-intent interface for language-conditioned humanoid control.">
+  <meta name="keywords" content="DAJI, humanoid control, language-conditioned control, joint intent, streaming generation">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nerfies: Deformable Neural Radiance Fields</title>
+  <title>Before the Body Moves | DAJI</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./static/images/favicon.svg">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <script defer src="./static/js/index.js"></script>
 </head>
-<body>
-
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://hypernerf.github.io">
-            HyperNeRF
-          </a>
-          <a class="navbar-item" href="https://nerfies.github.io">
-            Nerfies
-          </a>
-          <a class="navbar-item" href="https://latentfusion.github.io">
-            LatentFusion
-          </a>
-          <a class="navbar-item" href="https://photoshape.github.io">
-            PhotoShape
-          </a>
-        </div>
+<body id="top">
+  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a class="brand-mark" href="#top">DAJI</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="#abstract">Abstract</a>
+        <a href="#paradigm">Paradigm</a>
+        <a href="#framework">Framework</a>
+        <a href="#results">Results</a>
+        <a href="#videos">Videos</a>
+        <a href="#bibtex">BibTeX</a>
       </div>
     </div>
+  </nav>
 
-  </div>
-</nav>
+  <main>
+    <section class="hero section">
+      <div class="container is-max-desktop">
+        <div class="hero-copy reveal">
+          <p class="method-name">DAJI: Dynamics-Aligned Joint Intent</p>
+          <h1 class="paper-title">Before the Body Moves: Learning Anticipatory Joint Intent for Language-Conditioned Humanoid Control</h1>
+          <p class="hero-summary">
+            An anticipatory joint-intent interface for streaming language-conditioned humanoid control, built on a simple
+            claim: like human motor behavior, control should first form intent, then execute.
+          </p>
 
-
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Nerfies: Deformable Neural Radiance Fields</h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://keunhong.com">Keunhong Park</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="https://utkarshsinha.com">Utkarsh Sinha</a><sup>2</sup>,</span>
-            <span class="author-block">
-              <a href="https://jonbarron.info">Jonathan T. Barron</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="http://sofienbouaziz.com">Sofien Bouaziz</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
-            </span>
+          <div class="author-line">
+            <span>XXX XXX</span>
+            <span>XXX XXX</span>
+            <span>XXX XXX</span>
+            <span>XXX XXX</span>
           </div>
+          <p class="affiliation-line">XXX Lab &nbsp;&nbsp; XXX University &nbsp;&nbsp; XXX Research</p>
 
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>University of Washington,</span>
-            <span class="author-block"><sup>2</sup>Google Research</span>
-          </div>
-
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/pdf/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Video Link. -->
-              <span class="link-block">
-                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
-                  <span>Video</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/google/nerfies"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
-              </span>
-              <!-- Dataset Link. -->
-              <span class="link-block">
-                <a href="https://github.com/google/nerfies/releases/tag/0.1"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="far fa-images"></i>
-                  </span>
-                  <span>Data</span>
-                  </a>
-            </div>
-
+          <div class="cta-row">
+            <a class="project-button" href="#top" aria-disabled="true">
+              <span class="icon"><i class="fas fa-file-pdf"></i></span>
+              <span>Paper</span>
+            </a>
+            <a class="project-button" href="#top" aria-disabled="true">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code</span>
+            </a>
+            <a class="project-button" href="#top" aria-disabled="true">
+              <span class="icon"><i class="fas fa-video"></i></span>
+              <span>Video</span>
+            </a>
+            <a class="project-button" href="#bibtex">
+              <span class="icon"><i class="fas fa-quote-right"></i></span>
+              <span>BibTeX</span>
+            </a>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
-        free-viewpoint
-        portraits.
-      </h2>
-    </div>
-  </div>
-</section>
-
-
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/steve.mp4"
-                    type="video/mp4">
-          </video>
+    <section class="teaser section">
+      <div class="container is-max-widescreen">
+        <div class="image-panel reveal">
+          <img src="./static/images/daji-teaser.png" alt="Teaser of DAJI showing the anticipatory joint-intent concept.">
         </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/chair-tp.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/shiba.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/fullbody.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
+        <p class="teaser-caption reveal">
+          Instead of using reference trajectories as the deployment interface, DAJI predicts executable and anticipatory
+          joint-intent latents that improve future prediction and long-horizon humanoid control.
+        </p>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            We present the first method capable of photorealistically reconstructing a non-rigidly
-            deforming scene using photos/videos captured casually from mobile phones.
-          </p>
-          <p>
-            Our approach augments neural radiance fields
-            (NeRF) by optimizing an
-            additional continuous volumetric deformation field that warps each observed point into a
-            canonical 5D NeRF.
-            We observe that these NeRF-like deformation fields are prone to local minima, and
-            propose a coarse-to-fine optimization method for coordinate-based models that allows for
-            more robust optimization.
-            By adapting principles from geometry processing and physical simulation to NeRF-like
-            models, we propose an elastic regularization of the deformation field that further
-            improves robustness.
-          </p>
-          <p>
-            We show that <span class="dnerf">Nerfies</span> can turn casually captured selfie
-            photos/videos into deformable NeRF
-            models that allow for photorealistic renderings of the subject from arbitrary
-            viewpoints, which we dub <i>"nerfies"</i>. We evaluate our method by collecting data
-            using a
-            rig with two mobile phones that take time-synchronized photos, yielding train/validation
-            images of the same pose at different viewpoints. We show that our method faithfully
-            reconstructs non-rigidly deforming scenes and reproduces unseen views with high
-            fidelity.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
-
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    <!--/ Paper video. -->
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-
-      <!-- Visual Effects. -->
-      <div class="column">
-        <div class="content">
-          <h2 class="title is-3">Visual Effects</h2>
-          <p>
-            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
-            would be impossible without nerfies since it would require going through a wall.
-          </p>
-          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/dollyzoom-stacked.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <!--/ Visual Effects. -->
-
-      <!-- Matting. -->
-      <div class="column">
-        <h2 class="title is-3">Matting</h2>
-        <div class="columns is-centered">
-          <div class="column content">
+    <section class="section" id="abstract">
+      <div class="container is-max-desktop">
+        <div class="content-block reveal">
+          <h2 class="section-title">Abstract</h2>
+          <div class="section-copy">
             <p>
-              As a byproduct of our method, we can also solve the matting problem by ignoring
-              samples that fall outside of a bounding box during rendering.
+              Natural language is an intuitive interface for humanoid robots, yet streaming whole-body control requires
+              control representations that are executable now and anticipatory of future physical transitions. Existing
+              language-conditioned humanoid systems typically generate kinematic references that a low-level tracker must
+              repair reactively, or use latent or action policies whose outputs do not explicitly encode upcoming contact
+              changes, support transfers, and balance preparation.
             </p>
-            <video id="matting-video" controls playsinline height="100%">
-              <source src="./static/videos/matting.mp4"
-                      type="video/mp4">
-            </video>
+            <p>
+              We propose <strong>DAJI</strong>, a hierarchical framework that learns an anticipatory joint-intent interface
+              between language generation and closed-loop control. <strong>DAJI-Act</strong> distills a future-aware teacher
+              into a deployable diffusion action policy through student-driven rollouts, while <strong>DAJI-Flow</strong>
+              autoregressively generates future intent chunks from language and intent history. Experiments show strong results
+              in anticipatory latent learning, single-instruction generation, and streaming instruction following.
+            </p>
           </div>
-
         </div>
       </div>
-    </div>
-    <!--/ Matting. -->
+    </section>
 
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Animation</h2>
-
-        <!-- Interpolating. -->
-        <h3 class="title is-4">Interpolating states</h3>
-        <div class="content has-text-justified">
-          <p>
-            We can also animate the scene by interpolating the deformation latent codes of two input
-            frames. Use the slider here to linearly interpolate between the left frame and the right
-            frame.
+    <section class="section" id="paradigm">
+      <div class="container is-max-desktop">
+        <div class="content-block reveal">
+          <h2 class="section-title">A New Generation-to-Execution Paradigm</h2>
+          <p class="section-intro">
+            The paper's central claim is not just that DAJI is a better generator. It argues that language-conditioned
+            humanoid control needs a different interface: one that helps the body prepare for what comes next. The future
+            paradigm is not to generate a brittle reference and repair it afterwards, but to generate intent first and let
+            execution decode that intent under feedback, much closer to how humans prepare movement before it appears.
           </p>
         </div>
-        <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
+
+        <div class="feature-grid">
+          <article class="feature-card reveal">
+            <h3>Anticipatory Intent</h3>
+            <p>
+              DAJI encodes upcoming support shifts, contact transitions, and balance preparation before the visible motion
+              transition is complete. The system prepares the body before the body visibly moves.
+            </p>
+          </article>
+          <article class="feature-card reveal">
+            <h3>Flow-Generated, Directly Deployable</h3>
+            <p>
+              DAJI-Flow generates joint-intent latents directly, and those latents are consumable by DAJI-Act at deployment.
+              The generator is not producing a display-only motion description; it is producing a deployable control interface.
+            </p>
+          </article>
+          <article class="feature-card reveal">
+            <h3>Intent Then Execution</h3>
+            <p>
+              DAJI-Flow predicts future intent chunks while DAJI-Act executes them with live proprioception, supporting
+              long-horizon instruction following through a clean two-stage pattern: intention first, action second.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="framework">
+      <div class="container is-max-widescreen">
+        <div class="content-block reveal">
+          <h2 class="section-title">Framework</h2>
+          <p class="section-intro">
+            DAJI separates generation and execution through a shared joint-intent space. The generator produces low-frequency
+            future intent chunks, and the action policy decodes each latent into stable whole-body actions at control time.
+            This is the key design difference from reference-driven pipelines: the output of generation is already the control
+            interface used at deployment.
+          </p>
+        </div>
+
+        <div class="framework-layout reveal">
+          <div class="framework-image">
+            <img src="./static/images/daji-pipeline.png" alt="DAJI framework diagram showing DAJI-Flow and DAJI-Act.">
           </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
+          <div class="framework-notes">
+            <div class="framework-note">
+              <h3>DAJI-Act</h3>
+              <p>Distills a future-aware privileged teacher into a deployable diffusion action policy.</p>
             </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
+            <div class="framework-note">
+              <h3>DAJI-Flow</h3>
+              <p>Autoregressively predicts future joint-intent chunks from language and recent intent history.</p>
+            </div>
+            <div class="framework-note">
+              <h3>Joint-Intent Interface</h3>
+              <p>Replaces reactive reference tracking with an executable, anticipatory latent command space.</p>
+            </div>
           </div>
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
-          </div>
-        </div>
-        <br/>
-        <!--/ Interpolating. -->
-
-        <!-- Re-rendering. -->
-        <h3 class="title is-4">Re-rendering the input video</h3>
-        <div class="content has-text-justified">
-          <p>
-            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
-            viewpoint such as a stabilized camera by playing back the training deformations.
-          </p>
-        </div>
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 width="75%">
-            <source src="./static/videos/replay.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <!--/ Re-rendering. -->
-
-      </div>
-    </div>
-    <!--/ Animation. -->
-
-
-    <!-- Concurrent Work. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Related Links</h2>
-
-        <div class="content has-text-justified">
-          <p>
-            There's a lot of excellent work that was introduced around the same time as ours.
-          </p>
-          <p>
-            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
-          </p>
-          <p>
-            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
-            both use deformation fields to model non-rigid scenes.
-          </p>
-          <p>
-            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
-          </p>
-          <p>
-            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
-          </p>
         </div>
       </div>
-    </div>
-    <!--/ Concurrent Work. -->
+    </section>
 
-  </div>
-</section>
+    <section class="section" id="results">
+      <div class="container is-max-widescreen">
+        <div class="content-block reveal">
+          <h2 class="section-title">Results</h2>
+          <p class="section-intro">
+            The evaluation focuses on whether the learned latent behaves as a deployable anticipatory command: executable
+            under feedback control, predictive of upcoming motion, and stable over long-horizon rollouts. DAJI improves
+            language-motion quality while preserving a key systems property: the flow-generated latent can be directly deployed
+            through DAJI-Act rather than converted into a fragile external reference.
+          </p>
+        </div>
 
+        <div class="metric-grid reveal">
+          <div class="metric-card">
+            <span class="metric-value">94.42%</span>
+            <span class="metric-label">rollout success on HumanML3D-style generation</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value">0.147</span>
+            <span class="metric-label">FID on single-instruction generation</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value">0.152</span>
+            <span class="metric-label">subsequence FID on BABEL</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value">87%</span>
+            <span class="metric-label">60s rollout success with future-aware latent design</span>
+          </div>
+        </div>
 
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@article{park2021nerfies,
-  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
-  title     = {Nerfies: Deformable Neural Radiance Fields},
-  journal   = {ICCV},
-  year      = {2021},
+        <div class="results-gallery">
+          <figure class="image-panel reveal">
+            <img src="./static/images/daji-qualitative-deploy.png" alt="Qualitative deployment results for DAJI.">
+            <figcaption>DAJI produces executable motion under both streaming instruction switches and single-instruction generation.</figcaption>
+          </figure>
+          <figure class="image-panel reveal">
+            <img src="./static/images/daji-qualitative-rollout.png" alt="Qualitative rollout results for DAJI.">
+            <figcaption>Long-horizon rollouts remain coherent because the latent interface prepares upcoming transitions.</figcaption>
+          </figure>
+        </div>
+
+        <div class="table-block reveal">
+          <h3 class="table-title">Main Comparison on HumanML3D-Style Robot Motion Generation</h3>
+          <div class="table-scroll">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>MM-D ↓</th>
+                  <th>R@1 ↑</th>
+                  <th>R@2 ↑</th>
+                  <th>R@3 ↑</th>
+                  <th>FID ↓</th>
+                  <th>Div ↔</th>
+                  <th>MM ↑</th>
+                  <th>Succ. (%) ↑</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>GT</td>
+                  <td>0.968</td>
+                  <td>0.720</td>
+                  <td>0.878</td>
+                  <td>0.919</td>
+                  <td>0.000</td>
+                  <td>1.372</td>
+                  <td>--</td>
+                  <td>100.00</td>
+                </tr>
+                <tr>
+                  <td>GT (Sim)</td>
+                  <td>1.002</td>
+                  <td>0.687</td>
+                  <td>0.847</td>
+                  <td>0.900</td>
+                  <td>0.059</td>
+                  <td>1.320</td>
+                  <td>--</td>
+                  <td>94.50</td>
+                </tr>
+                <tr>
+                  <td>LangWBC</td>
+                  <td>1.462</td>
+                  <td>0.205</td>
+                  <td>0.328</td>
+                  <td>0.412</td>
+                  <td>0.510</td>
+                  <td>1.045</td>
+                  <td>0.365</td>
+                  <td>70.50</td>
+                </tr>
+                <tr>
+                  <td>ECHO</td>
+                  <td>1.318</td>
+                  <td>0.288</td>
+                  <td>0.432</td>
+                  <td>0.528</td>
+                  <td>0.378</td>
+                  <td>1.148</td>
+                  <td>0.462</td>
+                  <td>82.00</td>
+                </tr>
+                <tr>
+                  <td>FRoM-W1</td>
+                  <td>1.392</td>
+                  <td>0.245</td>
+                  <td>0.380</td>
+                  <td>0.471</td>
+                  <td>0.445</td>
+                  <td>1.095</td>
+                  <td>0.412</td>
+                  <td>76.00</td>
+                </tr>
+                <tr>
+                  <td>RoboGhost</td>
+                  <td>1.275</td>
+                  <td>0.325</td>
+                  <td>0.468</td>
+                  <td>0.562</td>
+                  <td>0.335</td>
+                  <td>1.178</td>
+                  <td>0.501</td>
+                  <td>85.00</td>
+                </tr>
+                <tr>
+                  <td>MotionStreamer</td>
+                  <td>1.225</td>
+                  <td>0.378</td>
+                  <td>0.542</td>
+                  <td>0.645</td>
+                  <td>0.278</td>
+                  <td>1.205</td>
+                  <td>0.585</td>
+                  <td>87.50</td>
+                </tr>
+                <tr>
+                  <td>TextOp</td>
+                  <td>1.175</td>
+                  <td>0.425</td>
+                  <td>0.595</td>
+                  <td>0.698</td>
+                  <td>0.225</td>
+                  <td>1.228</td>
+                  <td>0.628</td>
+                  <td>90.00</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td><strong>DAJI</strong></td>
+                  <td><strong>1.093</strong></td>
+                  <td><strong>0.549</strong></td>
+                  <td><strong>0.711</strong></td>
+                  <td><strong>0.796</strong></td>
+                  <td><strong>0.147</strong></td>
+                  <td><strong>1.291</strong></td>
+                  <td><strong>0.847</strong></td>
+                  <td><strong>94.42</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-note">
+            DAJI improves both language-motion alignment and rollout executability because the generator produces controller-distilled
+            intents rather than external kinematic references.
+          </p>
+        </div>
+
+        <div class="table-block reveal">
+          <h3 class="table-title">Long-Horizon Streaming Evaluation on BABEL</h3>
+          <div class="table-scroll">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>R@3 ↑</th>
+                  <th>FID ↓</th>
+                  <th>Div ↔</th>
+                  <th>MM-D ↓</th>
+                  <th>Transition FID ↓</th>
+                  <th>Transition Div ↔</th>
+                  <th>PJ ↓</th>
+                  <th>MJ ↓</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>GT</td>
+                  <td>0.654</td>
+                  <td>0.000</td>
+                  <td>1.299</td>
+                  <td>1.299</td>
+                  <td>0.000</td>
+                  <td>1.182</td>
+                  <td>0.043</td>
+                  <td>0.015</td>
+                </tr>
+                <tr>
+                  <td>GT (Sim)</td>
+                  <td>0.625</td>
+                  <td>0.059</td>
+                  <td>1.287</td>
+                  <td>1.157</td>
+                  <td>0.054</td>
+                  <td>1.153</td>
+                  <td>0.090</td>
+                  <td>0.022</td>
+                </tr>
+                <tr>
+                  <td>TextOp</td>
+                  <td>0.287</td>
+                  <td>0.538</td>
+                  <td>0.985</td>
+                  <td>1.514</td>
+                  <td>0.594</td>
+                  <td>0.784</td>
+                  <td>0.231</td>
+                  <td>0.156</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td><strong>DAJI</strong></td>
+                  <td><strong>0.443</strong></td>
+                  <td><strong>0.152</strong></td>
+                  <td><strong>1.219</strong></td>
+                  <td><strong>1.237</strong></td>
+                  <td><strong>0.236</strong></td>
+                  <td><strong>1.033</strong></td>
+                  <td><strong>0.115</strong></td>
+                  <td><strong>0.054</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-note">
+            The advantage of DAJI becomes clearer in streaming rollout, where anticipatory intent helps the controller prepare
+            support transfer, posture adaptation, and transition smoothness before the visible change is complete.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="videos">
+      <div class="container is-max-widescreen">
+        <div class="content-block reveal">
+          <h2 class="section-title">Demonstrations</h2>
+          <p class="section-intro">
+            Single-instruction generation and long-horizon streaming instruction following
+            across real-world and simulated humanoid deployments. Each video is conditioned on
+            a natural language instruction and executed through the DAJI joint-intent interface.
+          </p>
+        </div>
+
+        <div class="tab-switcher reveal" role="tablist" aria-label="Video domain selector">
+          <button class="tab-btn is-active" role="tab" aria-selected="true" data-tab="real" id="tab-btn-real" aria-controls="tabpanel-real">
+            <i class="fas fa-video"></i> Real-World
+          </button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="sim" id="tab-btn-sim" aria-controls="tabpanel-sim">
+            <i class="fas fa-desktop"></i> Simulation
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="bibtex">
+      <div class="container is-max-desktop">
+        <div class="content-block reveal">
+          <h2 class="section-title">BibTeX</h2>
+          <pre class="bibtex-block"><code>@article{daji2026,
+  title   = {Before the Body Moves: Learning Anticipatory Joint Intent for Language-Conditioned Humanoid Control},
+  author  = {XXX XXX and XXX XXX and XXX XXX and XXX XXX},
+  journal = {arXiv},
+  year    = {2026}
 }</code></pre>
-  </div>
-</section>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="./static/videos/nerfies_paper.pdf">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
-          </p>
         </div>
       </div>
-    </div>
-  </div>
-</footer>
+    </section>
+  </main>
 
+  <footer class="site-footer">
+    <div class="container is-max-desktop">
+      <p>Project page for DAJI. Authors and external links are placeholder entries pending release.</p>
+    </div>
+  </footer>
 </body>
 </html>
