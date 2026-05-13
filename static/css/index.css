@@ -851,14 +851,9 @@ img {
 }
 
 .streaming-card .instruction-chips {
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 0.42rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.streaming-card .instruction-chips::-webkit-scrollbar {
-  display: none;
 }
 
 .chip {
@@ -1033,11 +1028,6 @@ img {
 
   .streaming-card {
     padding: 0.85rem;
-  }
-
-  .streaming-card .instruction-chips {
-    flex-wrap: wrap;
-    overflow-x: visible;
   }
 
   .video-grid {
